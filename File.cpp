@@ -79,8 +79,9 @@ size_t File::getSize() const{
        * @param rhs A const reference to the file to be copied from
 */
 File::File(const File &rhs){
-
-
+   filename_ = rhs.filename_;
+   contents_ = rhs.filename_;
+   icon_ = rhs.getIcon();
 }
 
 
@@ -92,9 +93,12 @@ File::File(const File &rhs){
        * @note If copy assignment operator is invoked upon itself, do nothing.
 */
 File &File::operator=(const File &rhs){
-   File a;
+   //copy assignment operator
+   this->filename_ = rhs.filename_;
+   this->contents_ = rhs.contents_;
+   this->icon_ = rhs.icon_;
 
-   return a;
+   return *this;
 }
 
 
@@ -106,7 +110,12 @@ File &File::operator=(const File &rhs){
        *    - ALl pointers are set to nullptr
 */
 File::File( File &&rhs){
-   File a;
+   filename_ = rhs.filename_;
+   contents_ = rhs.contents_;
+   icon_ = rhs.icon_;
+   rhs.filename_ = "";
+   rhs.contents_ = "";
+   rhs.icon_ = nullptr;
 
 }
 
@@ -123,9 +132,16 @@ File::File( File &&rhs){
        *
 */
 File &File::operator=(File &&rhs){
-   File a;
-
-   return a;
+   //move assignment operator
+   if (this != &rhs) {
+      filename_ = rhs.filename_;
+      contents_ = rhs.contents_;
+      icon_ = rhs.icon_;
+      rhs.filename_ = "";
+      rhs.contents_ = "";
+      rhs.icon_ = nullptr;
+   }
+   return *this;
 
 }
 
